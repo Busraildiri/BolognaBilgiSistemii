@@ -1,0 +1,27 @@
+﻿@model BolognaBilgiSistemi.Models.AssignCoursesViewModel
+
+@{
+    ViewData["Title"] = $"Ders Atama için {Model?.Department?.Name}";
+}
+
+<h2>@Model?.Department?.Name için Ders Atama</h2>
+
+@if (Model?.Courses != null && Model?.FacultyMembers != null)
+{
+    <form asp-action="AssignCourses" asp-controller="Department" method="post">
+        @foreach (var course in Model.Courses)
+        {
+            <div>
+                <label>@course.Name</label>
+                <select asp-for="@course.SelectedFacultyMemberId" asp-items="Model.FacultyMembers">
+                    <option value="">Öğretim Elemanı Seçiniz</option>
+                </select>
+            </div>
+        }
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+    </form>
+}
+else
+{
+    <p>Yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.</p>
+}
