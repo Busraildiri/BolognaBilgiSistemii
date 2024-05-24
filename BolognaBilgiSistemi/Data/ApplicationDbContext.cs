@@ -44,9 +44,9 @@ namespace BolognaBilgiSistemi.Data
                 .HasForeignKey(ca => ca.FacultyMemberId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<FacultyMember>()
-                .Navigation(fm => fm.CourseAssignments)
-                .UsePropertyAccessMode(PropertyAccessMode.Property);
+            //modelBuilder.Entity<FacultyMember>()
+            //    .Navigation(fm => fm.CourseAssignments)
+            //    .UsePropertyAccessMode(PropertyAccessMode.Property);
         }
     }
 }

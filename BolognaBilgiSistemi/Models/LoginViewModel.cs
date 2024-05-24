@@ -15,10 +15,10 @@ namespace BolognaBilgiSistemi.Models.ViewModels
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessage = "Bu alan zorunludur.")]
+        //[Required(ErrorMessage = "Bu alan zorunludur.")]
         public string TCNumber { get; set; }
 
-        [Required(ErrorMessage = "Bu alan zorunludur.")]
+        //[Required(ErrorMessage = "Bu alan zorunludur.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 

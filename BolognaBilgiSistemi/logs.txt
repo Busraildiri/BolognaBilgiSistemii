@@ -1,0 +1,21 @@
+CourseId: 1
+FacultyMemberId: 2
+ModelState: False
+Error: The Courses field is required.
+Error: The Department field is required.
+Error: The FacultyMembers field is required.
+CourseId: 1
+FacultyMemberId: 2
+ModelState: False
+Error: The Courses field is required.
+Error: The Department field is required.
+Error: The FacultyMembers field is required.
+CourseId: 1
+FacultyMemberId: 2
+ModelState: False
+Error: The Courses field is required.
+Error: The Department field is required.
+Error: The FacultyMembers field is required.
+CourseId: 1
+FacultyMemberId: 2
+ModelState: True

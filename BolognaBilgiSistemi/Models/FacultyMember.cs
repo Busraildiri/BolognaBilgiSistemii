@@ -6,6 +6,8 @@ namespace BolognaBilgiSistemi.Models
 {
     public class FacultyMember
     {
+        private ICollection<CourseAssignment>? courseAssignments = new List<CourseAssignment>();
+
         public int Id { get; set; }
         [Required]
         public string TCNumber { get; set; }
@@ -18,7 +20,9 @@ namespace BolognaBilgiSistemi.Models
         public int DepartmentId { get; set; }
 
         [ForeignKey("DepartmentId")]
-        public Department Department { get; set; }
-        public ICollection<CourseAssignment> CourseAssignments { get; set; } = new List<CourseAssignment>();
+        public Department? Department { get; set; }
+        public ICollection<CourseAssignment>? CourseAssignments { get => courseAssignments; set => courseAssignments = value; }
+        [NotMapped]
+        public string FullName => $"{FirstName} {LastName}";
     }
 }

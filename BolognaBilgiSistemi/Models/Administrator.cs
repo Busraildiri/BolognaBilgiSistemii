@@ -13,7 +13,7 @@ namespace BolognaBilgiSistemi.Models
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
-        public int? DepartmentId { get; set; }  // Bölüm ID'si, zorunlu olmayan
+        public int DepartmentId { get; set; }  // Bölüm ID'si, zorunlu olmayan
         public Department Department { get; set; }
     }
 }

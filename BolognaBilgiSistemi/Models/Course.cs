@@ -8,8 +8,9 @@ namespace BolognaBilgiSistemi.Models
         public int CourseId { get; set; }
         [Required]
         public string Name { get; set; }
-        public int? DepartmentId { get; set; }
-        public Department Department { get; set; }
+        public int DepartmentId { get; set; }
+        public Department? Department { get; set; }
+        public string Description { get; set; } // Yeni özellik eklendi
         public ICollection<CourseAssignment> CourseAssignments { get; set; } = new List<CourseAssignment>();
     }
 }

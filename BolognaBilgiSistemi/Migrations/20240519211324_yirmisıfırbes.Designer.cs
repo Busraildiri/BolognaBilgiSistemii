@@ -4,6 +4,7 @@ using BolognaBilgiSistemi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BolognaBilgiSistemi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240519211324_yirmisıfırbes")]
+    partial class yirmisıfırbes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,7 +33,7 @@ namespace BolognaBilgiSistemi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DepartmentId")
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
@@ -52,7 +55,8 @@ namespace BolognaBilgiSistemi.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DepartmentId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[DepartmentId] IS NOT NULL");
 
                     b.ToTable("Administrators");
                 });
@@ -65,12 +69,8 @@ namespace BolognaBilgiSistemi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseId"));
 
-                    b.Property<int>("DepartmentId")
+                    b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -108,11 +108,11 @@ namespace BolognaBilgiSistemi.Migrations
 
             modelBuilder.Entity("BolognaBilgiSistemi.Models.Department", b =>
                 {
-                    b.Property<int?>("DepartmentId")
+                    b.Property<int>("DepartmentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("DepartmentId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentId"));
 
                     b.Property<int?>("AdministratorId")
                         .HasColumnType("int");
@@ -165,8 +165,7 @@ namespace BolognaBilgiSistemi.Migrations
                     b.HasOne("BolognaBilgiSistemi.Models.Department", "Department")
                         .WithOne("Administrator")
                         .HasForeignKey("BolognaBilgiSistemi.Models.Administrator", "DepartmentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Department");
                 });
@@ -175,9 +174,7 @@ namespace BolognaBilgiSistemi.Migrations
                 {
                     b.HasOne("BolognaBilgiSistemi.Models.Department", "Department")
                         .WithMany("Courses")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DepartmentId");
 
                     b.Navigation("Department");
                 });
@@ -219,7 +216,8 @@ namespace BolognaBilgiSistemi.Migrations
 
             modelBuilder.Entity("BolognaBilgiSistemi.Models.Department", b =>
                 {
-                    b.Navigation("Administrator");
+                    b.Navigation("Administrator")
+                        .IsRequired();
 
                     b.Navigation("Courses");
 

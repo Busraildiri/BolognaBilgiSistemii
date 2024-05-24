@@ -1,0 +1,63 @@
+﻿@* 
+
+@model BolognaBilgiSistemi.Models.ViewModels.FacultyCoursesViewModel
+
+<h2>@Model.FacultyName - Dersler</h2>
+
+<div id="assignedCourses">
+    @foreach (var course in Model.Courses)
+    {
+        <div>
+            <a href='/Faculty/EditCourse?courseId=@course.CourseId'>@course.Name (@course.DepartmentName bölümünde atandı)</a>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+ *@
+@* 
+@model BolognaBilgiSistemi.Models.ViewModels.FacultyCoursesViewModel
+
+<h2>@Model.FacultyName - Dersler</h2>
+
+<div id="assignedCourses">
+    @foreach (var course in Model.Courses)
+    {
+        <div>
+            <a href='/Faculty/EditCourse?courseId=@course.CourseId'>
+                @course.Name @if (!string.IsNullOrEmpty(course.DepartmentName))
+                {
+                    @($"(@course.DepartmentName bölümünde atandı)")
+                }
+                else
+                {
+                    @("(Bölüm bilgisi yok)")
+                }
+            </a>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+} *@
+
+
+        @model BolognaBilgiSistemi.Models.ViewModels.FacultyCoursesViewModel
+
+<h2>@Model.FacultyName - Dersler</h2>
+
+<div id="assignedCourses">
+    @foreach (var course in Model.Courses)
+    {
+        <div>
+            <a href='/Faculty/EditCourse?courseId=@course.CourseId'>@course.Name (@course.DepartmentName bölümünde atandı)</a>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,27 +1,77 @@
-﻿@model BolognaBilgiSistemi.Models.AssignCoursesViewModel
+﻿@model BolognaBilgiSistemi.Models.ViewModels.AssignCoursesViewModel
 
-@{
-    ViewData["Title"] = $"Ders Atama için {Model?.Department?.Name}";
-}
+<h2>@Model.DepartmentName Bölümü Ders Atama</h2>
 
-<h2>@Model?.Department?.Name için Ders Atama</h2>
-
-@if (Model?.Courses != null && Model?.FacultyMembers != null)
-{
-    <form asp-action="AssignCourses" asp-controller="Department" method="post">
-        @foreach (var course in Model.Courses)
-        {
+<div style="display: flex;">
+    <div style="flex: 1;">
+        <form id="courseAssignmentForm">
+            <input type="hidden" name="DepartmentId" value="@Model.DepartmentId" />
             <div>
-                <label>@course.Name</label>
-                <select asp-for="@course.SelectedFacultyMemberId" asp-items="Model.FacultyMembers">
-                    <option value="">Öğretim Elemanı Seçiniz</option>
-                </select>
+                <label asp-for="CourseId">Ders:</label>
+                <select asp-for="CourseId" asp-items="@(new SelectList(Model.Courses, "CourseId", "Name"))"></select>
             </div>
+            <div>
+                <label asp-for="FacultyMemberId">Öğretim Elemanı:</label>
+                <select asp-for="FacultyMemberId" asp-items="@(new SelectList(Model.FacultyMembers, "Value", "Text"))"></select>
+            </div>
+            <button type="button" id="submitBtn">Kaydet</button>
+        </form>
+    </div>
+    <div style="flex: 1; padding-left: 20px;">
+        <h3>Atanmış Dersler</h3>
+        <ul id="assignedCoursesList"></ul>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById("submitBtn").addEventListener("click", function () {
+            var courseId = document.querySelector("select[name='CourseId']").value;
+            var facultyMemberId = document.querySelector("select[name='FacultyMemberId']").value;
+            var departmentId = document.querySelector("input[name='DepartmentId']").value;
+
+            var data = {
+                CourseId: courseId,
+                FacultyMemberId: facultyMemberId,
+                DepartmentId: departmentId
+            };
+
+            fetch('/api/user/assigncourse', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Kaydetme başarılı");
+                        loadAssignedCourses();
+                    } else {
+                        alert("Kaydetme başarısız: " + data.errors.join(", "));
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+
+        function loadAssignedCourses() {
+            fetch('/User/GetCourseAssignments')
+                .then(response => response.json())
+                .then(data => {
+                    var list = document.getElementById("assignedCoursesList");
+                    list.innerHTML = "";
+                    data.assignments.forEach(function (item) {
+                        var listItem = document.createElement("li");
+                        listItem.textContent = `${item.courseName} - ${item.facultyMemberName} (${item.departmentName}nde atandı)`;
+                        list.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
         }
-        <button type="submit" class="btn btn-primary">Kaydet</button>
-    </form>
-}
-else
-{
-    <p>Yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.</p>
+
+        // Sayfa yüklendiğinde atanmış dersleri yükle
+        document.addEventListener("DOMContentLoaded", loadAssignedCourses);
+    </script>
 }
