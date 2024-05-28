@@ -1,13 +1,4 @@
-﻿//namespace BolognaBilgiSistemi.Models
-//{
-//    public class LoginViewModel
-//    {
-//        public string UserType { get; set; }
-//        public string TCNumber { get; set; }
-//        public string Password { get; set; }
-//    }
-
-//}
+﻿
 
 using System.ComponentModel.DataAnnotations;
 
@@ -27,17 +18,3 @@ namespace BolognaBilgiSistemi.Models.ViewModels
 }
 
 
-//using System.ComponentModel.DataAnnotations;
-
-//namespace BolognaBilgiSistemi.Models
-//{
-//    public class LoginViewModel
-//    {
-//        [Required]
-//        public string TCNumber { get; set; }
-
-//        [Required]
-//        [DataType(DataType.Password)]
-//        public string Password { get; set; }
-//    }
-//}

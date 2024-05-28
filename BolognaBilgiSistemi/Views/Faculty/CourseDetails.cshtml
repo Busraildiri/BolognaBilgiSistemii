@@ -1,0 +1,40 @@
+﻿@model BolognaBilgiSistemi.Models.ViewModels.CourseViewModel
+
+<h2>@Model.Name - Detaylar</h2>
+
+<form method="post" asp-action="SaveCourseDetails" asp-controller="Faculty">
+    <input type="hidden" asp-for="CourseId" />
+
+    <div>
+        <h3>Bölüm</h3>
+        <p>@Model.DepartmentName</p>
+    </div>
+
+    <div>
+        <h3>Öğretim Elemanı</h3>
+        <p>@Model.FacultyMemberName</p>
+    </div>
+
+    <div>
+        <h3>14 Haftalık İçerik</h3>
+        @for (int i = 0; i < Model.WeeklyContents.Count; i++)
+        {
+            <div>
+                <label for="content_@i">Hafta @(i + 1):</label>
+                <textarea id="content_@i" asp-for="@Model.WeeklyContents[i]" class="form-control"></textarea>
+            </div>
+        }
+    </div>
+
+    <div>
+        <h3>Kaynak Kitaplar</h3>
+        <textarea asp-for="SourceBooks" class="form-control"></textarea>
+    </div>
+
+    <div>
+        <h3>Ön Koşullar</h3>
+        <textarea asp-for="Prerequisites" class="form-control"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+</form>

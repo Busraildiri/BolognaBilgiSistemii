@@ -1,19 +1,42 @@
-﻿@model BolognaBilgiSistemi.Models.Course
+﻿@model BolognaBilgiSistemi.Models.ViewModels.CourseViewModel
 
-<h2>@Model.Name - Düzenle</h2>
+<h2>Ders Düzenleme: @Model.Name</h2>
 
 <form asp-action="EditCourse">
-    <div class="form-group">
-        <label asp-for="Name" class="control-label"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+    <input type="hidden" asp-for="CourseId" />
+
+    <div>
+        <label>Ders Adı</label>
+        <input type="text" asp-for="Name" readonly />
     </div>
-    <div class="form-group">
-        <label asp-for="Description" class="control-label"></label>
-        <input asp-for="Description" class="form-control" />
-        <span asp-validation-for="Description" class="text-danger"></span>
+    <div>
+        <label>Bölüm</label>
+        <input type="text" asp-for="DepartmentName" readonly />
     </div>
-    <button type="submit" class="btn btn-primary">Kaydet</button>
+    <div>
+        <label>Öğretim Elemanı</label>
+        <input type="text" asp-for="FacultyMemberName" readonly />
+    </div>
+    <div>
+        <label>14 Haftalık İçerik</label>
+        @for (int i = 0; i < 14; i++)
+        {
+            <div>
+                <label>Hafta @i+1</label>
+                <input type="text" asp-for="WeeklyContents[@i]" />
+            </div>
+        }
+    </div>
+    <div>
+        <label>Kaynak Kitaplar</label>
+        <textarea asp-for="SourceBooks" rows="5"></textarea>
+    </div>
+    <div>
+        <label>Ön Koşullar</label>
+        <textarea asp-for="Prerequisites" rows="3"></textarea>
+    </div>
+
+    <button type="submit">Kaydet</button>
 </form>
 
 @section Scripts {

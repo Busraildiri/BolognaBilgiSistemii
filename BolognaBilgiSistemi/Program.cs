@@ -1,5 +1,6 @@
 using BolognaBilgiSistemi.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 
@@ -15,10 +16,24 @@ builder.Services.AddControllersWithViews()
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Add authentication services
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";  // Login pathini buraya ekliyoruz
+        options.LogoutPath = "/Account/Logout"; // Logout pathini buraya ekliyoruz
+    });
+
+// Add authorization
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireLoggedIn", policy => policy.RequireAuthenticatedUser());
+});
+
 // Add session services to the container
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Oturum zaman aþýmý süresi
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Session timeout period
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
@@ -40,10 +55,20 @@ app.UseRouting();
 
 app.UseSession(); // Enable session before UseAuthorization
 
+app.UseAuthentication(); // Authentication middleware
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+// Map additional routes for your specific controllers and actions
+app.MapControllerRoute(
+    name: "faculty",
+    pattern: "{controller=Faculty}/{action=CourseDetails}/{courseId?}");
+
+app.MapControllerRoute(
+    name: "faculty-edit",
+    pattern: "{controller=Faculty}/{action=EditCourse}/{courseId?}");
 
 app.Run();

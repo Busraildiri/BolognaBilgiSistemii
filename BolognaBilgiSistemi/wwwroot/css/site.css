@@ -1,22 +1,146 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+.logout-button {
+    background-color: #dc3545; /* Ýlk hali kýrmýzý */
+    border-color: #dc3545;
+    color: white;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+.navbar {
+    background-color: #212529;
+}
+
+.navbar-brand, .nav-link, .navbar-text {
+    color: #155724 !important;
+    border: 2px solid #d4edda;
+    border-radius: 5px;
+    padding: 5px;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+    .navbar-brand:hover, .nav-link:hover, .navbar-text:hover {
+        transform: scale(1.1);
+        color: #000 !important;
+    }
+
+footer {
+    background-color: #343a40;
+    color: white;
+}
+
+    footer a {
+        color: white;
+    }
+
+        footer a:hover {
+            color: #258cfb;
+        }
+
+.btn-primary {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: white;
+}
+
+    .btn-primary:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+        color: white;
+    }
+
+h2 {
+    border: 2px solid #d4edda;
+    padding: 10px;
+    background-color: #d4edda;
+    color: #155724;
+    border-radius: 5px;
+}
+
+.btn-custom {
+    background-color: #155724;
+    border-color: #155724;
+    color: white;
+    margin: 5px;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-custom:hover {
+        background-color: #0c3d16;
+        color: white;
+    }
+
+.box {
+    border: 2px solid #155724;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+    .box:hover {
+        background-color: #e9ecef;
+    }
+
+/* Eklenen kýsýmlar */
+h1, h2, h3, h4, h5, h6, p, a, li {
+    color: black; /* Linkleri siyah yapma */
+}
+
+.navbar-brand, .nav-link, .navbar-text {
+    background-color: #d4edda;
+    color: #006400 !important;
+}
+
+    .navbar-brand:hover, .nav-link:hover, .navbar-text:hover {
+        color: #000 !important;
+    }
+
+.fistik-yesili {
+    background-color: #d4edda; /* Açýk fýstýk yeþili */
+    color: #155724;
+    border: 2px solid #155724;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.links a {
+    color: black; /* Linkleri siyah yapma */
+    text-decoration: none;
+}
+
+    .links a:hover {
+        color: black; /* Linklerin üzerine gelince rengi deðiþmesin */
+        text-decoration: underline;
+    }
+
+/* Form alanlarýnýn arka plan rengini deðiþtirme */
+.form-control {
+    background-color: #d4edda !important; /* Açýk fýstýk yeþili */
+    color: #155724 !important; /* Yazý rengini koyu yeþil yapma */
+}
+
+/* Giriþ sayfasý TC Kimlik Numarasý ve Þifre alanlarý için */
+input[type="text"], input[type="password"] {
+    background-color: #d4edda !important; /* Apaçýk yeþil */
 }

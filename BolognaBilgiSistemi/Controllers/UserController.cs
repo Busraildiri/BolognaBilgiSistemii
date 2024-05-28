@@ -56,7 +56,7 @@ namespace BolognaBilgiSistemi.Controllers
                     if (faculty != null)
                     {
                         HttpContext.Session.SetString("UserName", faculty.FirstName + " " + faculty.LastName);
-                       // HttpContext.Session.SetString("DepartmentName", faculty.Department.Name);
+                        HttpContext.Session.SetString("DepartmentName", faculty.Department.Name);
                         HttpContext.Session.SetString("UserType", "Faculty");
                         HttpContext.Session.SetInt32("FacultyId", faculty.Id); // FacultyId'yi Session'a ekliyoruz
                         return RedirectToAction("ViewCourses", "User", new { facultyId = faculty.Id });
@@ -74,6 +74,7 @@ namespace BolognaBilgiSistemi.Controllers
             var faculty = await _context.FacultyMembers
                                   .Include(f => f.CourseAssignments)
                                   .ThenInclude(ca => ca.Course)
+                                  .ThenInclude(c => c.Department) // Department bilgisi ekleniyor
                                   .FirstOrDefaultAsync(f => f.Id == facultyId);
 
             if (faculty == null)
@@ -87,22 +88,12 @@ namespace BolognaBilgiSistemi.Controllers
                 Courses = faculty.CourseAssignments.Select(ca => new CourseViewModel
                 {
                     CourseId = ca.Course.CourseId,
-                    Name = ca.Course.Name
+                    Name = ca.Course.Name,
+                    DepartmentName = ca.Course.Department != null ? ca.Course.Department.Name : "Bölüm bilgisi yok"
                 }).ToList()
             };
 
             return View(model);
-        }
-
-
-        public async Task<IActionResult> EditCourse(int courseId)
-        {
-            var course = await _context.Courses
-                                 .Include(c => c.CourseAssignments)
-                                 .ThenInclude(ca => ca.FacultyMember)
-                                 .FirstOrDefaultAsync(c => c.CourseId == courseId);
-
-            return View(course);
         }
 
         [HttpPost]
@@ -258,6 +249,13 @@ namespace BolognaBilgiSistemi.Controllers
 
 
             return Json(new { assignments });
+        }
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            HttpContext.Session.Clear();
+            Response.Cookies.Delete(".AspNetCore.Session");
+            return RedirectToAction("Login", "User");
         }
     }
 }

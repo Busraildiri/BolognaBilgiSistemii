@@ -54,10 +54,16 @@
     {
         <div>
             <a href='/Faculty/EditCourse?courseId=@course.CourseId'>@course.Name (@course.DepartmentName bölümünde atandı)</a>
+            <br />
+            <a href='/Faculty/CourseDetails?courseId=@course.CourseId'>Ders Detayları</a>
         </div>
     }
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        console.log("JQuery has been loaded successfully");
+    </script>
 }

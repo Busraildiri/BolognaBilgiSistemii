@@ -10,5 +10,9 @@ namespace BolognaBilgiSistemi.Models.ViewModels
         public string Name { get; set; }
         public string DepartmentName { get; set; } // Bölüm ismi
         public int SelectedFacultyMemberId { get; set; }
+        public string FacultyMemberName { get; set; }
+        public List<string> WeeklyContents { get; set; } = new List<string>(new string[14]); // 14 haftalık içerik
+        public string SourceBooks { get; set; } // Kaynak Kitaplar
+        public string Prerequisites { get; set; } // Ön Koşullar
     }
 }
